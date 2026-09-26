@@ -2,104 +2,192 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Manosphere – Verzeichnisse</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161618" media="(prefers-color-scheme: dark)">
+<title>Manosphere – Quellen</title>
 <style>
   :root {
     --bg: #ffffff;
+    --surface: #f6f4f2;
     --text: #1d1d1f;
-    --muted: #5f6368;
+    --muted: #6b6b70;
     --accent: #7a1f2b;
-    --rule: #e2e2e2;
+    --rule: #e4e1de;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #161618;
+      --surface: #202023;
       --text: #ececec;
       --muted: #a0a0a5;
-      --accent: #e07a86;
+      --accent: #e8909a;
       --rule: #333338;
     }
   }
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: "Times New Roman", Georgia, serif;
-    font-size: 12pt;
-    line-height: 1.5;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    line-height: 1.6;
   }
   main {
-    max-width: 780px;
+    max-width: 760px;
     margin: 0 auto;
-    padding: 48px 16px 64px;
+    padding: 40px 20px 64px;
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+  .eyebrow {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    margin: 0 0 8px;
   }
   h1 {
-    font-size: 1.5rem;
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+    line-height: 1.3;
     text-align: center;
-    margin: 0 0 40px;
-    font-weight: bold;
+    margin: 0 0 24px;
+    text-wrap: balance;
   }
-  h2 {
-    font-size: 1.15rem;
-    margin: 36px 0 14px;
-    padding-bottom: 6px;
+
+  /* Sprungnavigation */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 10px 0;
+    margin: 0 0 8px;
+    background: var(--bg);
     border-bottom: 1px solid var(--rule);
-    color: var(--accent);
   }
+  nav a {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 8px 16px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    margin: 32px 0 14px;
+    color: var(--accent);
+    scroll-margin-top: 72px;
+  }
+
+  /* Fußnoten: Nummer in fester Spalte */
   ol.footnotes {
+    list-style: none;
     margin: 0;
-    padding-left: 2.2em;
+    padding: 0;
+    counter-reset: fn;
   }
   ol.footnotes li {
-    margin: 2px 0;
+    counter-increment: fn;
+    display: grid;
+    grid-template-columns: 2.4em 1fr;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--rule);
   }
-  ol.footnotes li::marker {
-    content: counter(list-item) ") ";
+  ol.footnotes li:last-child { border-bottom: 0; }
+  ol.footnotes li::before {
+    content: counter(fn);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
     color: var(--muted);
+    padding-top: 0.2em;
   }
+
+  /* Literatur: auf dem Handy als Karten */
   ul.bibliography {
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
   ul.bibliography li {
-    padding-left: 2em;
-    text-indent: -2em;
-    margin-bottom: 12px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 14px 16px;
   }
   a {
     color: var(--accent);
-    word-break: break-all;
+    overflow-wrap: anywhere;
+    text-underline-offset: 2px;
   }
+
+  /* Größere Bildschirme: klassisches Verzeichnis mit hängendem Einzug */
+  @media (min-width: 700px) {
+    body { font-size: 16px; }
+    main { padding-top: 56px; }
+    ul.bibliography { gap: 0; }
+    ul.bibliography li {
+      background: none;
+      border: 0;
+      border-radius: 0;
+      padding: 0 0 12px 2em;
+      text-indent: -2em;
+    }
+  }
+
   @media print {
-    :root { --bg: #fff; --text: #000; --accent: #000; --muted: #000; --rule: #999; }
+    :root { --bg: #fff; --surface: #fff; --text: #000; --accent: #000; --muted: #000; --rule: #fff; }
+    body { font-family: "Times New Roman", serif; font-size: 12pt; }
+    nav, .eyebrow { display: none; }
     main { padding: 0; }
     a { color: #000; text-decoration: none; }
+    ul.bibliography li { background: none; border: 0; padding: 0 0 10px 2em; text-indent: -2em; }
     h2 { break-after: avoid; }
   }
 </style>
 </head>
 <body>
 <main>
+  <p class="eyebrow">Quellen zum Poster</p>
   <h1>„Manosphere: (Digitaler) Kampf gegen den Feminismus“</h1>
 
+  <nav aria-label="Abschnitte">
+    <a href="#fussnoten">Fußnoten</a>
+    <a href="#literatur">Literatur</a>
+  </nav>
+
   <section>
-    <h2>Fußnotenverzeichnis</h2>
+    <h2 id="fussnoten">Fußnotenverzeichnis</h2>
     <ol class="footnotes">
       <li>vgl. Ging 2019: 639</li>
-      <li>vgl. Gerrand 2025: 446ff</li>
+      <li>vgl. Gerrand et al. 2025: 446 ff.</li>
       <li>vgl. Sugiura 2021: 25</li>
       <li>vgl. Tornay-Márquez et al. 2026: 305</li>
       <li>vgl. Barnes/Karim 2026: 18</li>
       <li>vgl. Sugiura 2021: 24</li>
       <li>vgl. Sugiura 2021: 23</li>
-      <li>vgl. Barnes/Karim 2025: 9</li>
+      <li>vgl. Barnes/Karim 2026: 9</li>
       <li>vgl. Sugiura 2021: 21</li>
       <li>vgl. Tornay-Márquez et al. 2026: 314</li>
       <li>vgl. Sugiura 2021: 30</li>
-      <li>vgl. Vallerga &amp; Zurbriggen 2022: 605</li>
+      <li>vgl. Vallerga/Zurbriggen 2022: 605</li>
       <li>vgl. Tornay-Márquez et al. 2026: 305</li>
       <li>vgl. David/Neumann 2024: 32</li>
       <li>vgl. Tornay-Márquez et al. 2026: 311</li>
@@ -107,22 +195,22 @@
       <li>vgl. HateAid o.J.: o.S.</li>
       <li>vgl. Tornay-Márquez et al. 2026: 318</li>
       <li>vgl. Sugiura 2021: 79</li>
-      <li>vgl. Tornay-Márquez et al. 2026: 311; Barnes &amp; Karim 2026: 4</li>
+      <li>vgl. Tornay-Márquez et al. 2026: 311; Barnes/Karim 2026: 4</li>
       <li>vgl. Tornay-Márquez et al. 2026: 312 ff.</li>
     </ol>
   </section>
 
   <section>
-    <h2>Literaturverzeichnis</h2>
+    <h2 id="literatur">Literaturverzeichnis</h2>
     <ul class="bibliography">
       <li>Barnes, Mariel J./Karim, Sabrina M. (2026): The Manosphere and Politics, In: <i>Comparative Political Studies</i> 59(1). S. 3-43.</li>
-      <li>David, Christopher/Neumann, Felix 2024: In|vo|lun|ta|ri|ly ce|li|ba|te (Incel), Substantiv, männlich. Eine misogyne Gefahr für die innere Sicherheit. <a href="https://www.kas.de/documents/d/guest/incels">https://www.kas.de/documents/d/guest/incels</a> [abgerufen am 20.07.2026].</li>
+      <li>David, Christopher/Neumann, Felix (2024): In|vo|lun|ta|ri|ly ce|li|ba|te (Incel), Substantiv, männlich. Eine misogyne Gefahr für die innere Sicherheit. <a href="https://www.kas.de/documents/d/guest/incels">https://www.kas.de/documents/d/guest/incels</a> [abgerufen am 20.07.2026].</li>
       <li>Gerrand, Vivian et al. (2025): Mapping the Neo-Manosphere(s): New Directions for Research, In: <i>Men and Masculinities</i>, 28(5), S. 443-464.</li>
-      <li>Ging, Debbie (2019): Alphas, Betas, and Incels: Theorizing the Masculinities of the Manosphere, in: <i>Men and Masculinities</i> 22(4).</li>
+      <li>Ging, Debbie (2019): Alphas, Betas, and Incels: Theorizing the Masculinities of the Manosphere, In: <i>Men and Masculinities</i> 22(4), S. 638-657.</li>
       <li>HateAid (o.J.): Incels – unterschätzte Gefahr aus der dunklen Ecke des Netzes. <a href="https://hateaid.org/incels/">https://hateaid.org/incels/</a> [abgerufen am 22.09.2026].</li>
-      <li>Sugiura, Lisa (2021): <i>The Incel Rebellion. The Rise of the Manosphere and the Virtual War Against Women.</i> Emerald Publishing Limited. <a href="https://doi.org/10.1108/9781839822544">https://doi.org/10.1108/9781839822544</a>. [abgerufen am 30.06.2026].</li>
-      <li>Tornay-Márquez, M. Cruz, Pedro-Carañana, Joan &amp; Kundu, Vedabhyas (2026): Digital Targeting of Women Activists: Redefining Online Hate Speech as Direct Violence in Peace Studies, <i>Women's Studies in Communication</i>, (49)2, S. 304-322.</li>
-      <li>Vallerga, Michael/Zurbriggen Eileen L. (2022): Hegemonic masculinities in the ‘Manosphere’: A thematic analysis of beliefs about men and women on The Red Pill and Incel. In: <i>Analyses of Social Issues and Public Policy</i>, 22, S. 602–625.</li>
+      <li>Sugiura, Lisa (2021): <i>The Incel Rebellion. The Rise of the Manosphere and the Virtual War Against Women.</i> Emerald Publishing Limited. <a href="https://doi.org/10.1108/9781839822544">https://doi.org/10.1108/9781839822544</a>.</li>
+      <li>Tornay-Márquez, M. Cruz/Pedro-Carañana, Joan/Kundu, Vedabhyas (2026): Digital Targeting of Women Activists: Redefining Online Hate Speech as Direct Violence in Peace Studies, <i>Women's Studies in Communication</i>, 49(2), S. 304-322.</li>
+      <li>Vallerga, Michael/Zurbriggen, Eileen L. (2022): Hegemonic masculinities in the ‘Manosphere’: A thematic analysis of beliefs about men and women on The Red Pill and Incel. In: <i>Analyses of Social Issues and Public Policy</i>, 22, S. 602–625.</li>
     </ul>
   </section>
 </main>
